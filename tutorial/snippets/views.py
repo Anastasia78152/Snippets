@@ -1,8 +1,8 @@
-from rest_framework import mixins
+from django.contrib.auth.models import User
 from rest_framework import generics
 
 from .models import Snippet
-from .serializers import SnippetSerializer
+from .serializers import SnippetSerializer, UserSerializer
 
 
 class SnippetList(mixins.ListModelMixin,
@@ -33,3 +33,12 @@ class SnippetDetail(mixins.RetrieveModelMixin,
 
    def delete(self, request, *args, **kwargs):
        return self.destroy(request, *args, **kwargs)
+
+   class UserList(generics.ListAPIView):
+   queryset = User.objects.all()
+   serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+   queryset = User.objects.all()
+   serializer_class = UserSerializer
